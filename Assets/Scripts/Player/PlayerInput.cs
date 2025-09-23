@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Player
 {
-    public class PlayerInput : NetworkBehaviour
+    public class PlayerInput : MonoBehaviour
     {
         public struct InputPayLoad : INetworkSerializable
         {
