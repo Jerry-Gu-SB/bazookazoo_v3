@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Menu
 {
-    public class Menu_FlowManager : MonoBehaviour
+    public class MenuFlowManager : MonoBehaviour
     {
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()

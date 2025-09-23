@@ -31,7 +31,7 @@ namespace Global_Utils
         }
         private void FixedUpdate()
         {
-            if (!IsServer)  return;
+            if (!IsServer) return;
             _timer += Time.deltaTime;
             if (_timer >= minTimeBetweenTicks)
             {
