@@ -1,16 +1,20 @@
 using System;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Global_Utils
 {
     public class GlobalTick : NetworkBehaviour
     {
         public static GlobalTick Instance { get; private set; }
+        public float minTimeBetweenTicks;
+        public UnityEvent tickEvent;
+        
         private float _timer;
         private const int ServerTickRate = 60;  // 60 fps
-        public float minTimeBetweenTicks;
         private NetworkVariable<int> CurrentTick { get; set; }
+        
 
         private void Awake()
         {
@@ -22,27 +26,20 @@ namespace Global_Utils
             Instance = this;
             
             minTimeBetweenTicks = 1f / ServerTickRate;
+            CurrentTick = new NetworkVariable<int>(0);
+            tickEvent = new UnityEvent();
         }
-
-        private void Update()
+        private void FixedUpdate()
         {
-            if (IsServer)
-            {
-                _timer += Time.deltaTime;
-            }
-        }
-
-        public bool ShouldTick()
-        {
+            if (!IsServer)  return;
+            _timer += Time.deltaTime;
             if (_timer >= minTimeBetweenTicks)
             {
                 _timer -= minTimeBetweenTicks;
                 CurrentTick.Value++;
-                return true;
+                tickEvent.Invoke();
             }
-            return false;
         }
-
         public int GetCurrentTick()
         {
             return CurrentTick.Value;
