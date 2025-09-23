@@ -6,11 +6,11 @@ namespace Global_Utils
 {
     public class GlobalTick : NetworkBehaviour
     {
-        private static GlobalTick Instance { get; set; }
+        public static GlobalTick Instance { get; private set; }
         private float _timer;
         private const int ServerTickRate = 60;  // 60 fps
         public float minTimeBetweenTicks;
-        public NetworkVariable<int> CurrentTick { get; private set; }
+        private NetworkVariable<int> CurrentTick { get; set; }
 
         private void Awake()
         {
@@ -41,6 +41,11 @@ namespace Global_Utils
                 return true;
             }
             return false;
+        }
+
+        public int GetCurrentTick()
+        {
+            return CurrentTick.Value;
         }
     }
 }

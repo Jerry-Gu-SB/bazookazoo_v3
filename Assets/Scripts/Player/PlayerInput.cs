@@ -1,19 +1,29 @@
+using Global_Utils;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace Player
 {
-    public class PlayerInput : MonoBehaviour
+    public class PlayerInput : NetworkBehaviour
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+        public struct InputPayLoad : INetworkSerializable
         {
-        
+            public int Tick;
+            public Vector2 InputVector;
+            public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+            {
+                serializer.SerializeValue(ref Tick);
+                serializer.SerializeValue(ref InputVector);
+            }
         }
-
-        // Update is called once per frame
-        void Update()
+        public InputPayLoad GetInput()
         {
-        
+            InputPayLoad input = new InputPayLoad
+            {
+                Tick = GlobalTick.Instance.GetCurrentTick(),
+                InputVector = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"))
+            };
+            return input;
         }
     }
 }
