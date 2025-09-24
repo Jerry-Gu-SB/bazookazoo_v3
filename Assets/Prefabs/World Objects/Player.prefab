@@ -218,3 +218,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f98164dd1f17c9a45b4722ed5a877782, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveForce: 30
+  maxControlSpeed: 10
+  controlInAirMultiplier: 0.75
+  fallingMultiplier: 15
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8

@@ -11,8 +11,8 @@ namespace Player
         public float controlInAirMultiplier = 0.75f;
         public float fallingMultiplier = 15f;
         
-        [Header("Ground Layer")]
-        public LayerMask groundLayer;
+        [Header("Terrain Layer")]
+        public LayerMask terrainLayer;
         
         private Rigidbody2D _rigidbody2D;
         
@@ -29,7 +29,7 @@ namespace Player
         public void HandleInput(PlayerInput.InputPayLoad playerInput)
         {
             Vector2 input =  playerInput.InputVector;
-            bool isGrounded = Physics2D.Raycast(transform.position, Vector2.down, .6f, groundLayer);
+            bool isGrounded = Physics2D.Raycast(transform.position, Vector2.down, .6f, terrainLayer);
             float controlMultiplier = isGrounded ? 1f : controlInAirMultiplier;  // Decrease air horizontal control
 
             if (_rigidbody2D.linearVelocityY < 0 && !isGrounded)
